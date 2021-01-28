@@ -8,45 +8,41 @@
 <body>
 <?php
 
-// session_start();
-// if (isset ($_GET['logout'])){
-//     unset ($_SESSION['user']);
-//     // header('Location: /');
-//     // exit();
-// }
-// if(!isset($_SESSION['user']) && !isset($_POST['password']) && !isset($_POST['button'])){
-    
-    if(isset($_POST['password']) && isset($_POST['button'])){
-        if ($_POST['password']=='12345'){
-//             $_SESSION['user']='admin';
-//             // header('Location: index.php');
-//             //         exit();
-            // echo '<a href="?logout">Выход</a>';
-            // echo '<p >Добро пожаловать, '.$_SESSION['user'].'!</p>';
-            include 'admin-page.php';
-        }
-         else{
-        echo '
-        <h3>Войти в кабинет администратора</h3>
-        <form method="post" action="">
-            <label>Введите пароль</label>
-            <input type="text" name="password" id="password">
-            <input type="submit" name="button" value="Войти">
-        </form>
-    ';     
-        echo 'Неправильный пароль';
-        }
+session_start();
+
+if (isset($_GET['logout'])){
+    unset ($_SESSION['user']);
+    header('Location: index.php');
+    exit();
+}
+
+if (!isset($_SESSION['user']) && !isset($_POST['password'])){
+    echo '<form name="auth" method="post" action="">
+        <label for="password" class="header">Введите пароль (12345):</label><br>
+        <input type="password" id="password" name="password"><br>
+        <input type="submit" name="enterBtn" value="Войти">
+        </form>'; 
+}
+
+if (!isset($_SESSION['user']) && isset($_POST['password'])) {
+    if ($_POST['password'] == '12345'){
+        $_SESSION['user'] = 'admin';
     }
-    else{
-        echo '
-        <h3>Войти в кабинет администратора</h3>
-        <form method="post" action="">
-            <label>Введите пароль</label>
-            <input type="text" name="password" id="password">
-            <input type="submit" name="button" value="Войти">
-        </form>
-    ';     
+    else {
+        echo '<form name="auth" method="post" action="">
+        <label for="password" class="header">Введите пароль (12345):</label><br>
+        <input type="password" id="password" name="password"><br>
+        <input type="submit" name="enterBtn" value="Войти">
+        </form>';
+        echo '<p>Неверный пароль</p>';
     }
+}
+
+if (isset($_SESSION['user'])){
+    echo '<a href="?logout">Выход</a>';
+    echo '<p >Добро пожаловать, '.$_SESSION['user'].'!</p>';
+    include 'admin-page.php';
+}
    
 
 

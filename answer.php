@@ -8,8 +8,7 @@ if( mysqli_connect_errno() )
 
     
 if (isset($_GET['token']) && preg_match('/^[0-9A-F]{40}$/i', $_GET["token"])){
-    $token=$_GET['token'];
-    // echo 'Наш токен: '.$token.'<br>';   
+    $token=$_GET['token'];  
 }
 else{
     echo 'Что-то не так с токеном(';
@@ -25,25 +24,25 @@ while( $row=mysqli_fetch_row($db_token) ){
         $session_id=mysqli_query($mysqli, "SELECT session_id FROM sessions WHERE sessions.session_token ='$token'");
         while( $arr=mysqli_fetch_row($session_id) ){
             $our_session_id=$arr[0];
-            echo $our_session_id.'<br>';
+            // echo $our_session_id.'<br>';
         }
 
         $question_id=mysqli_query($mysqli, "SELECT question_id FROM questions WHERE questions.session_id ='$our_session_id'");
         while( $arr=mysqli_fetch_row($question_id) ){
             $our_question_id=$arr[0];
-            echo $our_question_id.'<br>';
+            // echo $our_question_id.'<br>';
         }
 
         $question_text=mysqli_query($mysqli, "SELECT question_text FROM questions WHERE questions.session_id ='$our_session_id'");
         while( $arr=mysqli_fetch_row($question_text) ){
             $our_question_text=$arr[0];
-            echo $our_question_text.'<br>';
+            // echo $our_question_text.'<br>';
         }
 
         $question_type=mysqli_query($mysqli, "SELECT question_type FROM questions WHERE questions.session_id ='$our_session_id'");
         while( $arr=mysqli_fetch_row($question_type) ){
             $our_question_type=$arr[0];
-            echo $our_question_type.'<br>';
+            // echo $our_question_type.'<br>';
         }
 
         switch ($our_question_type) {
@@ -59,6 +58,8 @@ while( $row=mysqli_fetch_row($db_token) ){
             case 4:
                 $for_type='<textarea name="answer"></textarea>';
                 break;
+            default:
+                echo 'Не выбран тип вопроса';
         }
 
         echo '
@@ -93,21 +94,7 @@ while( $row=mysqli_fetch_row($db_token) ){
 
 
     }
-    // else{
-    //     // echo 'Совпадений нет<br>';
-    //     echo 'Неправильная ссылка или еще чего<br>';
-    // }
-
 }
-
-
-
-
-
-
-
-    
-
 
 
 

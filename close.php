@@ -19,7 +19,7 @@ else{
                 <tr>
                     <td>'.$row[0].'</td>
                     <td>'.$row[1].'</td>
-                    <td><a href="'.$row[2].'">'.$row[2].'</a></td>
+                    <td><a href="http://php-3sem-exam.std-949.ist.mospolytech.ru/answer.php?token='.$row[3].'">Ссылка</a></td>
                     <td><a href="#">Закрыть сессию</a></td>
                 </tr>';
         }
