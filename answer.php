@@ -18,18 +18,8 @@ else{
 $db_token=mysqli_query($mysqli, "SELECT session_token FROM sessions");
 
 while( $row=mysqli_fetch_row($db_token) ){
-    // $row=mysqli_fetch_row($db_token);
-    // echo count($row);
-    // for ($i = 0; $i<=count($row); $i++){
-    //     if ($row[$i]===$token){
-    //         echo 'Find!';
-    //     }
-    // }
-
     $db=$row[0];
-    // echo $db.'<br>';
     if ($db===$token){
-        // echo 'Есть совпадение<br>';
         echo 'This is answer page<br>';
 
         $session_id=mysqli_query($mysqli, "SELECT session_id FROM sessions WHERE sessions.session_token ='$token'");
@@ -81,13 +71,24 @@ while( $row=mysqli_fetch_row($db_token) ){
 
         if (isset($_POST['addAnswer'])){
             $user_answer=$_POST['answer'];
-            $sql_res=mysqli_query($mysqli, "INSERT INTO answers(question_id, answer_itself) VALUES ('$our_question_id', '$user_answer')");
+            if($our_question_type==3 && strlen($user_answer)>50){
+                echo 'Данный тип вопроса расчитан на 50 символов';
+            }else
+            if($our_question_type==4 && strlen($user_answer)>255){
+                echo 'Данный тип вопроса расчитан на 255 символов';
+            }
+            else{
+                $sql_res=mysqli_query($mysqli, "INSERT INTO answers(question_id, answer_itself) VALUES ('$our_question_id', '$user_answer')");
 
-        if (!$sql_res)
-            echo '<div class="error">При добавлении ответа произошла ошибка '.mysqli_errno($mysqli).'. Повторите попытку</div>';
-        else // если все прошло нормально – выводим сообщение
-            echo '<p>Ответ успешно добавлен</p>';
-        }
+                if (!$sql_res)
+                    echo '<div class="error">При добавлении ответа произошла ошибка '.mysqli_errno($mysqli).'. Повторите попытку</div>';
+                else 
+                    echo '<p>Ответ успешно добавлен</p>';
+                }
+            }
+
+
+            
 
 
 

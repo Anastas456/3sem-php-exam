@@ -7,20 +7,49 @@
 </head>
 <body>
 <?php
-if ((!isset($_POST['password']) || $_POST['password'] != '12345') && !isset($_POST['enterButton']))
-{
-    echo '
-    <h3>Войти в кабинет администратора</h3>
-    <form method="post" action="">
-        <label>Введите пароль (12345)</label>
-        <input type="text" name="password" id="password">
-        <input type="submit" name="button" value="Войти">
-    </form>
-';
-}
-else {
-    include 'admin-page.php';
-}
+
+// session_start();
+// if (isset ($_GET['logout'])){
+//     unset ($_SESSION['user']);
+//     // header('Location: /');
+//     // exit();
+// }
+// if(!isset($_SESSION['user']) && !isset($_POST['password']) && !isset($_POST['button'])){
+    
+    if(isset($_POST['password']) && isset($_POST['button'])){
+        if ($_POST['password']=='12345'){
+//             $_SESSION['user']='admin';
+//             // header('Location: index.php');
+//             //         exit();
+            // echo '<a href="?logout">Выход</a>';
+            // echo '<p >Добро пожаловать, '.$_SESSION['user'].'!</p>';
+            include 'admin-page.php';
+        }
+         else{
+        echo '
+        <h3>Войти в кабинет администратора</h3>
+        <form method="post" action="">
+            <label>Введите пароль</label>
+            <input type="text" name="password" id="password">
+            <input type="submit" name="button" value="Войти">
+        </form>
+    ';     
+        echo 'Неправильный пароль';
+        }
+    }
+    else{
+        echo '
+        <h3>Войти в кабинет администратора</h3>
+        <form method="post" action="">
+            <label>Введите пароль</label>
+            <input type="text" name="password" id="password">
+            <input type="submit" name="button" value="Войти">
+        </form>
+    ';     
+    }
+   
+
+
 ?>
 </body>
 </html>

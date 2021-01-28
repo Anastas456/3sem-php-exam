@@ -13,7 +13,7 @@ mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
     if( mysqli_connect_errno() ) 
         echo 'Ошибка подключения к БД: '.mysqli_connect_error(); 
 
-    echo 'Есть подключение в бд<br><hr>';
+    // echo 'Есть подключение в бд<br><hr>';
 
     $forLink='0123456789qwertyuiopasdfghjklzxcvbnm';
     $token = sha1(uniqid($forLink, true));
@@ -29,12 +29,12 @@ mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
         if (!$sql_res)
             echo '<div class="error">При создании сессии произошла ошибка '.mysqli_errno($mysqli).'. Повторите попытку</div>';
-        else // если все прошло нормально – выводим сообщение
-            echo '<p>Сессия успешно создана. Ссылка на нее:</p>
-            <a href="'.$url.'"> $url</a>';
+        else
+            echo '<p>Сессия успешно создана.</p>
+            ';
 
     echo '<form method="get" action="">
-        <input type="submit" name="addQuestion" id="addQuestion" value="Добавить вопрос (пока работает правиль только с добавлением одного)">
+        <input type="submit" name="addQuestion" id="addQuestion" value="Добавить вопрос (пока работает правильно только с добавлением одного)">
     
     </form>';
 
@@ -67,8 +67,9 @@ mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
         if (!$sql_res_for_quest)
             echo '<div class="error">При добавлении вопроса произошла ошибка '.mysqli_errno($mysqli).'. Повторите попытку</div>';
-        else // если все прошло нормально – выводим сообщение
-            echo '<p>Вопрос успешно добавлен</p>';
+        else 
+            echo '<p>Вопрос успешно добавлен</p><br>
+            <p>Ссылка на форму для сбора ответов: <a target="_blank" href="'.$url.'"> $url</a></p>';
     }
     
 // }
