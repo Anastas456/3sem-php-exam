@@ -15,7 +15,13 @@ mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
 
     echo 'Есть подключение в бд<br><hr>';
 
-    $sql_res=mysqli_query($mysqli, "INSERT INTO sessions(is_open) VALUES ('1')");
+    $forLink='0123456789qwertyuiopasdfghjklzxcvbnm';
+    $token = sha1(uniqid($forLink, true));
+    $url='http://localhost/papka/php-3sem/exam/answer.php?token='.$token;
+    // echo $url;
+
+
+    $sql_res=mysqli_query($mysqli, "INSERT INTO sessions(is_open, session_link, session_token) VALUES ('1', '$url', '$token')");
     $session_id=mysqli_query($mysqli, "SELECT session_id FROM sessions ORDER BY sessions.session_id DESC LIMIT 1");
     while( $row=mysqli_fetch_row($session_id) ){
         $last_session_id=$row[0];
@@ -24,7 +30,8 @@ mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
         if (!$sql_res)
             echo '<div class="error">При создании сессии произошла ошибка '.mysqli_errno($mysqli).'. Повторите попытку</div>';
         else // если все прошло нормально – выводим сообщение
-            echo '<p>Сессия успешно создана</p>';
+            echo '<p>Сессия успешно создана. Ссылка на нее:</p>
+            <a href="'.$url.'"> $url</a>';
 
     echo '<form method="get" action="">
         <input type="submit" name="addQuestion" id="addQuestion" value="Добавить вопрос (пока работает правиль только с добавлением одного)">
